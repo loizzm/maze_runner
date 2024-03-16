@@ -90,6 +90,7 @@ void print_maze() {
 		}
 		printf("\n");
 	}
+	printf("\n");
 }
 
 bool check_for_exit(pos_t pos){
@@ -157,17 +158,21 @@ bool walk(pos_t pos) {
 			cur_pos = next_pos;
 			next_pos = valid_positions.top();
 			valid_positions.pop();
+			print_maze();
 		}
 		if(check_for_valid_pos(next_pos)){
 			maze[cur_pos.i][cur_pos.j] = '.';
-			maze[next_pos.i][next_pos.j] = '.';
+			maze[next_pos.i][next_pos.j] = 'o';
+			print_maze();
 			cur_pos = next_pos;
 			next_pos = valid_positions.top();
 			maze[next_pos.i][next_pos.j] = 'o';
+			maze[cur_pos.i][cur_pos.j] = '.';
 			valid_positions.pop();
+			print_maze();
 			return true;
 		}
-
+		
 	}
 	
 	// Repita até que a saída seja encontrada ou não existam mais posições não exploradas
@@ -208,7 +213,7 @@ delete [] maze;
 
 int main(int argc, char* argv[]) {
 	// carregar o labirinto com o nome do arquivo recebido como argumento
-	pos_t initial_pos = load_maze("../data/maze2.txt");
+	pos_t initial_pos = load_maze("../data/maze4.txt");
 	// chamar a função de navegação
 	bool exit_found = walk(initial_pos);
 	free_memory();
